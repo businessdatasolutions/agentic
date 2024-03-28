@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="content-area">
+        <!-- Content will be loaded here -->
+      </div>
+    </div>
+    >
+    <script>
+      // Function to load and display the JSON content
+      async function loadContent() {
+        try {
+          const response = await fetch("article.json"); // Adjust the path as necessary
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+
+          const contentArea = document.getElementById("content-area");
+
+          data.forEach((section) => {
+            const sectionEl = document.createElement("div");
+            sectionEl.className = "section";
+
+            const titleEl = document.createElement("h2");
+            titleEl.className = "section-title";
+            titleEl.textContent = section.title;
+
+            const contentEl = document.createElement("section");
+            contentEl.className = "section-content";
+            contentEl.innerHTML = section.content;
+
+            sectionEl.appendChild(titleEl);
+            sectionEl.appendChild(contentEl);
+
+            contentArea.appendChild(sectionEl);
+          });
+        } catch (error) {
+          console.error("Error loading the content:", error);
+        }
+      }
+
+      // Load the content when the page is loaded
+      window.addEventListener("DOMContentLoaded", (event) => {
+        loadContent();
+      });
+    </script>
+  </body>
+</html>
